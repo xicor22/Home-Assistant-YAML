@@ -49,5 +49,5 @@ http:
 #       service: shell_command.sleep_windows_laptop
 
 shell_command:
-  git_update: /bin/bash git_update.sh
+  git_update: /bin/sh git_update.sh
 #   sleep_windows_laptop: 'ssh saksham@192.168.1.160 "RUNDLL32.EXE powrprof.dll,SetSuspendState 0,1,0"'
