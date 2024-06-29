@@ -1,0 +1,170 @@
+esphome:
+  name: "balcony-switch-board"
+  friendly_name: "balcony-switch-board"
+  project:
+    name: esphome.web
+    version: '1.0'
+  
+preferences:
+  flash_write_interval: 1min
+
+esp8266:
+  board: esp01_1m
+  restore_from_flash: True
+  early_pin_init: false
+  
+
+# Enable logging
+logger:
+  baud_rate: 0
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret balcony_switch_board_key
+
+ota:
+  - platform : esphome
+    password: !secret balcony_switch_board_ota
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+    - ssid: !secret wifi_ssid_1
+      password: !secret wifi_password_1
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Balcony"
+    password: "HAHA2205"
+
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp32.yaml@main
+  import_full_config: true
+
+web_server:
+
+switch:
+  - platform: gpio
+    pin: 5
+    name: "Light"
+    id: R1
+    inverted: yes
+    restore_mode: RESTORE_DEFAULT_OFF
+
+  - platform: gpio
+    pin: 4
+    name: "Fan"
+    id: R2
+    inverted: yes
+    restore_mode: RESTORE_DEFAULT_OFF
+
+  - platform: gpio
+    pin: 0
+    name: "Right Socket"
+    id: R3
+    inverted: yes
+    restore_mode: RESTORE_DEFAULT_OFF
+  
+  - platform: gpio
+    pin: 2
+    name: "Left Socket"
+    id: R4
+    inverted: yes
+    restore_mode: RESTORE_DEFAULT_OFF
+
+  
+
+binary_sensor:
+
+#Right Socket
+  - platform: gpio
+    name: "Switch1"
+    id: S1
+    pin:
+      number: 14
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    filters:
+      - delayed_on: 500ms
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: S1
+            then:
+              - switch.turn_on: R4
+            else:
+              - switch.turn_off: R4
+
+
+#Left Socket
+  - platform: gpio
+    name: "Switch2"
+    id: S2
+    pin:
+      number: 12
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    filters:
+      - delayed_on: 500ms
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: S2
+            then:
+              - switch.turn_on: R3
+            else:
+              - switch.turn_off: R3
+
+#Fan
+  - platform: gpio
+    name: "Switch3"
+    id: S3
+    pin:
+      number: 13
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    filters:
+      - delayed_on: 500ms
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: S3
+            then:
+              - switch.turn_on: R2
+            else:
+              - switch.turn_off: R2
+
+#Light
+  - platform: gpio
+    name: "Switch4"
+    id: S4
+    pin:
+      number: 3
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    filters:
+      - delayed_on: 500ms
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: S4
+            then:
+              - switch.turn_on: R1
+            else:
+              - switch.turn_off: R1

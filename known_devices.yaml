@@ -1,0 +1,111 @@
+30_bb_7d_19_88_d9:
+  name: Shubham_Device
+  mac: 30:BB:7D:19:88:D9
+  icon:
+  picture:
+  track: true
+
+laptop:
+  name: Laptop
+  mac: A4:B1:C1:A2:56:43
+  icon:
+  picture:
+  track: true
+
+94_fb_a7_69_83_91:
+  name: 94_fb_a7_69_83_91
+  mac: 94:FB:A7:69:83:91
+  icon:
+  picture:
+  track: true
+
+rpi:
+  name: rpi
+  mac: D8:3A:DD:68:C6:21
+  icon:
+  picture:
+  track: true
+
+d8_3a_dd_68_c6_22:
+  name: RPI_WIFI
+  mac: D8:3A:DD:68:C6:22
+  icon:
+  picture:
+  track: true
+
+wiprolight:
+  name: WiproLight
+  mac: 2C:F4:32:BB:0E:1D
+  icon:
+  picture:
+  track: true
+
+moto:
+  name: moto
+  mac: 7C:7B:1C:5A:6F:CF
+  icon:
+  picture:
+  track: true
+
+60_6e_e8_e7_8d_50:
+  name: Chandravati_Device
+  mac: 60:6E:E8:E7:8D:50
+  icon:
+  picture:
+  track: true
+
+d8_bf_c0_c0_30_9e:
+  name: Balcony_Switch_Board
+  mac: D8:BF:C0:C0:30:9E
+  icon:
+  picture:
+  track: true
+
+5e_74_43_9e_73_90:
+  name: Binay_Phone
+  mac: 5E:74:43:9E:73:90
+  icon:
+  picture:
+  track: true
+
+echo:
+  name: echo
+  mac: 68:DB:F5:20:2F:DA
+  icon:
+  picture:
+  track: true
+
+42_0e_17_23_a3_ee:
+  name: 42_0e_17_23_a3_ee
+  mac: 42:0E:17:23:A3:EE
+  icon:
+  picture:
+  track: true
+
+oneplustv:
+  name: OnePlusTV
+  mac: A0:91:A2:42:5B:1B
+  icon:
+  picture:
+  track: true
+
+ec_64_c9_c0_4c_d3:
+  name: ec_64_c9_c0_4c_d3
+  mac: EC:64:C9:C0:4C:D3
+  icon:
+  picture:
+  track: true
+
+08_f9_e0_7e_78_52:
+  name: 08_f9_e0_7e_78_52
+  mac: 08:F9:E0:7E:78:52
+  icon:
+  picture:
+  track: true
+
+10_82_d7_34_77_d7:
+  name: 10_82_d7_34_77_d7
+  mac: 10:82:D7:34:77:D7
+  icon:
+  picture:
+  track: true

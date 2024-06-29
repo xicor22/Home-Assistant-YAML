@@ -1,0 +1,17 @@
+sleep_tile_2:
+  alias: 'Sleep Tile '
+  sequence:
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.esphome_web_c04cd3_led_strip
+      - light.esphome_web_c04cd3_pwm_out
+    data: {}
+  - service: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.esphome_web_c04cd3_speaker
+      - switch.esphome_web_c04cd3_fan
+  description: ''

@@ -1,0 +1,155 @@
+# Just need to edit this section now 
+
+substitutions:
+  name: water-tank-d1
+  friendly_name: Water Tank
+  key: !secret water_tank_d1_key
+  ota: !secret water_tank_d1_ota
+  wifipass: "HAHA2205"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: '1.0'
+
+esp8266:
+  board: d1_mini
+  early_pin_init: false
+
+# Enable logging
+logger:
+  baud_rate: 0
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: ${key}
+
+ota:
+  - platform: esphome
+    password: ${ota}
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+    - ssid: !secret wifi_ssid_1
+      password: !secret wifi_password_1
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${friendly_name}
+    password: ${wifipass}
+
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp8266.yaml@main
+  import_full_config: true
+
+web_server:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 2 #d4
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    name: "Water Level 1"
+    device_class: "moisture"
+    filters: 
+      - delayed_on: 3000ms
+      - delayed_off: 1000ms
+          
+    
+  - platform: gpio
+    pin:
+      number: 12 #d6
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    name: "Water Level 2"
+    device_class: "moisture"
+    filters: 
+      - delayed_on: 3000ms
+      - delayed_off: 1000ms
+    
+  - platform: gpio
+    pin:
+      number: 13 #d7
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    name: "Water Level 3"
+    device_class: "moisture"
+    filters: 
+      - delayed_on: 3000ms
+      - delayed_off: 1000ms
+
+  - platform: gpio
+    pin:
+      number: 14 #d5
+      inverted: True
+      mode: 
+        input: True
+        pullup: True
+    name: "Water Level 4"
+    device_class: "moisture"
+    filters: 
+      - delayed_on: 3000ms
+      - delayed_off: 1000ms
+  
+  - platform: gpio
+    pin: 
+      number: GPIO1 #tx
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Motor switch"
+    filters: 
+      - delayed_on_off: 500ms
+
+  - platform: gpio
+    pin: 
+      number: GPIO3 #rx
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "RO switch"
+    device_class: "moisture"
+    filters: 
+      - delayed_on_off: 500ms
+
+
+one_wire:
+  platform: gpio
+  pin: 16 #d0
+
+sensor:
+  - platform: dallas_temp
+    address: 0xaa0000006a2fc128
+    update_interval: 30sec
+    name: "DS18B20 Temperature"
+
+
+
+switch:
+  - platform: gpio
+    pin: GPIO4 #d2
+    name: "Water Pump Relay"
+    id: motor_relay
+    restore_mode: RESTORE_DEFAULT_OFF
+    inverted: True
+
+  - platform: gpio
+    pin: GPIO5 #d1
+    name: "RO Filter Relay"
+    id: ro_relay
+    restore_mode: RESTORE_DEFAULT_OFF
+    inverted: True
+

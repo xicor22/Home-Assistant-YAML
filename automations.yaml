@@ -1,0 +1,147 @@
+- id: '1718293005582'
+  alias: Spotify
+  description: Location - Under rubber part of phone stand
+  trigger:
+  - platform: tag
+    tag_id: '1'
+  condition:
+  - condition: or
+    conditions:
+    - condition: device
+      device_id: cc35eec3cc747d459c2ba6b4e586e5fc
+      domain: media_player
+      entity_id: a6a5b71dc44c4c501d3554b87b0f29cd
+      type: is_idle
+    - condition: device
+      device_id: cc35eec3cc747d459c2ba6b4e586e5fc
+      domain: media_player
+      entity_id: a6a5b71dc44c4c501d3554b87b0f29cd
+      type: is_playing
+    - condition: device
+      device_id: cc35eec3cc747d459c2ba6b4e586e5fc
+      domain: media_player
+      entity_id: a6a5b71dc44c4c501d3554b87b0f29cd
+      type: is_paused
+  action:
+  - service: spotcast.start
+    data:
+      force_playback: true
+      repeat: 'off'
+      shuffle: false
+      offset: 0
+      ignore_fully_played: false
+      random_song: true
+      spotify_device_id: 331f3fb6ab3843b9e79b4a899c8d0a4692de5496
+  mode: single
+- id: '1718378012503'
+  alias: Motor
+  description: Location - Above tower hanger in bathroom
+  trigger:
+  - platform: tag
+    tag_id: abc4f1f7-d029-422e-bf06-a35d90bcd654
+  condition: []
+  action:
+  - type: toggle
+    device_id: 1d46db3c67a4480164b67f8d91900c4e
+    entity_id: 10ac30c4d37e11e7d78c2547eb0cb2a7
+    domain: switch
+  mode: single
+- id: '1719133493177'
+  alias: Bed Tag Automation
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 4bb367bd-fd99-437b-892b-1859a412b5b6
+    device_id: aeccc899f329107739f8c0b905a9e4ea
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: time
+        after: '23:30:00'
+        before: 05:00:00
+      sequence:
+      - service: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.esphome_web_c04cd3_led_strip
+          - light.esphome_web_c04cd3_pwm_out
+      - service: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - switch.test_light
+          - switch.esphome_web_c04cd3_fan
+          - switch.esphome_web_c04cd3_speaker
+    - conditions:
+      - condition: time
+        after: 05:01:00
+        before: '20:30:00'
+      sequence:
+      - service: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.esphome_web_c04cd3_led_strip
+      - service: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - switch.test_light
+          - switch.test_fan
+          - switch.esphome_web_c04cd3_speaker
+  mode: single
+- id: '1719133708983'
+  alias: Spotify pause on sleep
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 4bb367bd-fd99-437b-892b-1859a412b5b6
+    device_id: aeccc899f329107739f8c0b905a9e4ea
+  condition:
+  - condition: state
+    entity_id: media_player.spotify_xicor22
+    state: playing
+  action:
+  - if:
+    - condition: time
+      after: '23:30:00'
+      before: 07:00:00
+    then:
+    - service: media_player.media_pause
+      target:
+        entity_id:
+        - media_player.spotify_xicor22
+      data: {}
+  mode: single
+- id: '1719517700251'
+  alias: Esp Update
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - update.table_firmware
+    - update.test_firmware
+    - update.water_tank_d1_mini_firmware
+    to: 'on'
+  condition:
+  - condition: time
+    after: 02:00:00
+    before: 06:00:00
+    weekday:
+    - sat
+  action:
+  - service: update.install
+    metadata: {}
+    data:
+      backup: true
+    target:
+      device_id:
+      - 1d46db3c67a4480164b67f8d91900c4e
+      - e497602d568603f75348961750eff5e8
+      - a3efc36bce9d4c043f6df60cb62d41da
+  mode: single

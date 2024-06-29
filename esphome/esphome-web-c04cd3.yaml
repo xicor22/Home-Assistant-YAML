@@ -1,0 +1,131 @@
+# Just need to edit this section now 
+
+substitutions:
+  name: table-d1
+  friendly_name: Table
+  key: !secret study_key
+  ota: !secret study_ota
+  wifipass: "HAHA2205"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: '1.0'
+
+preferences:
+  flash_write_interval: 1min
+
+esp8266:
+  board: d1_mini
+  restore_from_flash: True
+  early_pin_init: False 
+
+# Enable logging
+logger:
+  baud_rate: 0
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: ${key}
+
+ota:
+  - platform: esphome
+    password: ${ota}
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+    - ssid: !secret wifi_ssid_1
+      password: !secret wifi_password_1
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${friendly_name}
+    password: ${wifipass}
+
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp8266.yaml@main
+  import_full_config: true
+
+web_server:
+
+switch:
+  - platform: gpio
+    pin: 0
+    id: mosfet_0
+    name: "Fan"
+    restore_mode: RESTORE_DEFAULT_OFF
+
+  - platform: gpio
+    pin: 2
+    id: mosfet_2
+    name: "Speaker"
+    restore_mode: RESTORE_DEFAULT_OFF
+
+# PWM Output for GPIO 4 and 5
+output:
+  - platform: esp8266_pwm
+    id: pwm_output_4
+    pin: GPIO4
+  - platform: esp8266_pwm
+    id: pwm_output_5
+    pin: GPIO5
+
+light:
+  - platform: monochromatic
+    name: "PWM OUT"
+    output: pwm_output_4
+    id: light_4
+    restore_mode: RESTORE_DEFAULT_OFF
+    
+  - platform: monochromatic
+    name: "LED Strip"
+    output: pwm_output_5
+    id: light_5
+    restore_mode: RESTORE_DEFAULT_OFF
+
+# Binary Sensors for TP223
+binary_sensor:
+  - platform: gpio
+    pin: GPIO12
+    id: tp223_12
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: tp223_12
+            then:
+              - switch.turn_on: mosfet_2
+            else:
+              - switch.turn_off: mosfet_2
+  - platform: gpio
+    pin: GPIO13
+    id: tp223_13
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: tp223_13
+            then:
+              - switch.turn_on: mosfet_0
+            else:
+              - switch.turn_off: mosfet_0
+  - platform: gpio
+    pin: GPIO14
+    id: tp223_14
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: tp223_14
+            then:
+              - light.turn_on: light_5
+            else:
+              - light.turn_off: light_5
