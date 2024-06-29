@@ -15,3 +15,10 @@ sleep_tile_2:
       - switch.esphome_web_c04cd3_speaker
       - switch.esphome_web_c04cd3_fan
   description: ''
+update_github:
+  alias: Update github
+  sequence:
+  - service: shell_command.git_update
+    data: {}
+  description: ''
+  icon: mdi:github

@@ -31,7 +31,7 @@
       offset: 0
       ignore_fully_played: false
       random_song: true
-      spotify_device_id: !secret sp_dev_id
+      spotify_device_id: 331f3fb6ab3843b9e79b4a899c8d0a4692de5496
   mode: single
 - id: '1718378012503'
   alias: Motor
@@ -144,4 +144,15 @@
       - 1d46db3c67a4480164b67f8d91900c4e
       - e497602d568603f75348961750eff5e8
       - a3efc36bce9d4c043f6df60cb62d41da
+  mode: single
+- id: '1719684908047'
+  alias: Update github repo
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00:00
+  condition: []
+  action:
+  - service: shell_command.git_update
+    data: {}
   mode: single
