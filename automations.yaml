@@ -31,7 +31,7 @@
       offset: 0
       ignore_fully_played: false
       random_song: true
-      spotify_device_id: 331f3fb6ab3843b9e79b4a899c8d0a4692de5496
+      spotify_device_id: !secret sp_dev_id
   mode: single
 - id: '1718378012503'
   alias: Motor
@@ -42,8 +42,8 @@
   condition: []
   action:
   - type: toggle
-    device_id: 1d46db3c67a4480164b67f8d91900c4e
-    entity_id: 10ac30c4d37e11e7d78c2547eb0cb2a7
+    device_id: a3efc36bce9d4c043f6df60cb62d41da
+    entity_id: 366f968c768043dcf71d72c9afe8a1c2
     domain: switch
   mode: single
 - id: '1719133493177'
