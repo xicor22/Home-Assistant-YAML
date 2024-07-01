@@ -1,0 +1,59 @@
+type: horizontal-stack
+title: Bedroom
+cards:
+  - type: custom:mushroom-light-card
+    entity: switch.bedroom_32s_tube_light
+    layout: vertical
+    name: Tube Light
+    icon: mdi:lightbulb-fluorescent-tube
+    tap_action:
+      action: toggle
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+    icon_color: deep-purple
+    secondary_info: none
+  - type: custom:mushroom-light-card
+    entity: switch.bedroom_32s_led
+    layout: vertical
+    name: LED
+    icon: mdi:lightbulb
+    double_tap_action:
+      action: none
+    hold_action:
+      action: none
+    tap_action:
+      action: toggle
+    fill_container: false
+    secondary_info: none
+    icon_color: green
+  - type: custom:mushroom-entity-card
+    entity: switch.bedroom_32s_left_socket
+    layout: vertical
+    name: "Left "
+    icon: mdi:toggle-switch
+    fill_container: false
+    icon_type: entity-picture
+    tap_action:
+      action: toggle
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+    icon_color: deep-purple
+    secondary_info: none
+  - type: custom:mushroom-entity-card
+    entity: switch.bedroom_32s_right_socket
+    layout: vertical
+    name: Right
+    icon: mdi:toggle-switch
+    fill_container: false
+    icon_color: green
+    tap_action:
+      action: toggle
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+    secondary_info: none

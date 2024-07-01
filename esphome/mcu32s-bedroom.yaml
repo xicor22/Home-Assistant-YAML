@@ -62,57 +62,57 @@ wifi:
 captive_portal:
     
 switch:
-  - platform: gpio
-    pin: 14                                   
-    name: "Fan"                                  
-    id: R1
-    inverted: yes                          # The relay is in active high and needs to be pulled to ground 
-    restore_mode: RESTORE_DEFAULT_OFF
+  # - platform: gpio
+  #   pin: 14                                   
+  #   name: "Fan"                                  
+  #   id: R1
+  #   inverted: yes                          # The relay is in active high and needs to be pulled to ground 
+  #   restore_mode: RESTORE_DEFAULT_OFF
   
   - platform: gpio
     pin: 27                                   
     name: "LED"                                  
-    id: R2
+    id: R1
     inverted: yes                           # The relay is in active high and needs to be pulled to ground 
     restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: gpio
-    pin: 26                                   
+    pin: 14                                   
     name: "Tube Light"                                  
-    id: R3
+    id: R2
     inverted: yes                           # The relay is in active high and needs to be pulled to ground 
     restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: gpio
     pin: 25                                   
     name: "Right Socket"                                  
+    id: R3
+    inverted: yes                           # The relay is in active high and needs to be pulled to ground 
+    restore_mode: RESTORE_DEFAULT_OFF
+
+  - platform: gpio
+    pin: 26                                   
+    name: "Left Socket"                                  
     id: R4
     inverted: yes                           # The relay is in active high and needs to be pulled to ground 
     restore_mode: RESTORE_DEFAULT_OFF
 
-  - platform: gpio
-    pin: 33                                   
-    name: "Left Socket"                                  
-    id: R5
-    inverted: yes                           # The relay is in active high and needs to be pulled to ground 
-    restore_mode: RESTORE_DEFAULT_OFF
-
-  - platform: gpio
-    pin: 32                                   
-    name: "Empty"                                  
-    id: R6
-    inverted: yes                           # The relay is in active high and needs to be pulled to ground 
-    restore_mode: RESTORE_DEFAULT_OFF
+  # - platform: gpio
+  #   pin: 32                                   
+  #   name: "Empty"                                  
+  #   id: R6
+  #   inverted: yes                           # The relay is in active high and needs to be pulled to ground 
+  #   restore_mode: RESTORE_DEFAULT_OFF
   
 
 
 binary_sensor:
 
   - platform: gpio
-    name: "Right Socket"                                   
+    name: "Led"                                   
     id: S1
     pin:
-      number: 19                               
+      number: 16                               
       inverted: True
       mode:
         input: True
@@ -130,10 +130,10 @@ binary_sensor:
               - switch.turn_off: R1
   
   - platform: gpio
-    name: "Left Socket"                                   
+    name: "Tubelight"                                   
     id: S2
     pin:
-      number: 18                               
+      number: 4                               
       inverted: True
       mode:
         input: True
@@ -154,7 +154,7 @@ binary_sensor:
   #   name: "Fan"                                   
   #   id: S3
   #   pin:
-  #     number: 5                               
+  #     number: 19                               
   #     inverted: True
   #     mode:
   #       input: True
@@ -172,7 +172,28 @@ binary_sensor:
   #             - switch.turn_off: R3
   
   - platform: gpio
-    name: "Led"                                   
+    name: "Right Socket"                                   
+    id: S3
+    pin:
+      number: 18                               
+      inverted: True
+      mode:
+        input: True
+        pullup: True
+    filters:
+      - delayed_on: 500ms
+    on_state:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_on: S3
+            then:
+              - switch.turn_on: R3
+            else:
+              - switch.turn_off: R3
+  
+  - platform: gpio
+    name: "Left Socket"                                   
     id: S4
     pin:
       number: 17                               
@@ -192,46 +213,6 @@ binary_sensor:
             else:
               - switch.turn_off: R4
   
-  - platform: gpio
-    name: "Tubelight"                                   
-    id: S5
-    pin:
-      number: 16                               
-      inverted: True
-      mode:
-        input: True
-        pullup: True
-    filters:
-      - delayed_on: 500ms
-    on_state:
-      then:
-        - if:
-            condition:
-              - binary_sensor.is_on: S5
-            then:
-              - switch.turn_on: R5
-            else:
-              - switch.turn_off: R5
-  
-  - platform: gpio
-    name: "Empty"                                   
-    id: S6
-    pin:
-      number: 4                               
-      inverted: True
-      mode:
-        input: True
-        pullup: True
-    filters:
-      - delayed_on: 500ms
-    on_state:
-      then:
-        - if:
-            condition:
-              - binary_sensor.is_on: S6
-            then:
-              - switch.turn_on: R6
-            else:
-              - switch.turn_off: R6
+
   
   
