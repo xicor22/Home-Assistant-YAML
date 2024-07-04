@@ -56,4 +56,14 @@ wifi:
     password: ${wifipass}
 
 captive_portal:
-    
+
+uart:
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  baud_rate: 9600
+
+
+sensor:
+  - platform: "jsn_sr04t"
+    name: "Distance"
+    update_interval: 1s
