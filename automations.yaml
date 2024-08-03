@@ -156,3 +156,15 @@
   - service: shell_command.git_update
     data: {}
   mode: single
+- id: '1722707094116'
+  alias: sleep music
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.music
+  condition: []
+  action:
+  - service: shell_command.shutdown_windows_laptop
+    data: {}
+  mode: single

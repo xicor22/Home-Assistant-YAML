@@ -40,14 +40,11 @@ http:
   ip_ban_enabled: true
   login_attempts_threshold: 5
 
-# switch:
-#   - platform: wake_on_lan
-#     name: "Wake Windows Laptop"
-#     mac: "A4:B1:C1:A2:56:43"
-#     host: "192.168.1.160"
-#     turn_off:
-#       service: shell_command.sleep_windows_laptop
-
 shell_command:
   git_update: /bin/bash git_update.sh
-#   sleep_windows_laptop: 'ssh saksham@192.168.1.160 "RUNDLL32.EXE powrprof.dll,SetSuspendState 0,1,0"'
+
+  shutdown_windows_laptop: 'ssh saksham@192.168.1.160 "shutdown -s -f -t 100"'
+
+timer:
+  shutdown_windows_laptop:
+    duration: "00:30:00"
