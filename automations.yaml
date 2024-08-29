@@ -168,3 +168,34 @@
   - service: shell_command.shutdown_windows_laptop
     data: {}
   mode: single
+- id: '1724872886443'
+  alias: 'All out '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.test_right_socket
+    to: 'on'
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+  condition:
+  - condition: time
+    after: 00:00:00
+    before: 07:00:00
+    weekday:
+    - sat
+    - fri
+    - thu
+    - wed
+    - tue
+    - mon
+    - sun
+  action:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.test_right_socket
+  mode: single
